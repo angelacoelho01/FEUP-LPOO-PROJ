@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LanternaGUI.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">escapethemansion$Tests_in__escapethemansion_test_.exec</a> &gt; <a href="index.source.html" class="el_package">com.escapethemansion.gui</a> &gt; <span class="el_source">LanternaGUI.java</span></div><h1>LanternaGUI.java</h1><pre class="source lang-java linenums">package com.escapethemansion.gui;
+
+import com.escapethemansion.model.game.Position;
+import com.escapethemansion.model.game.element.Key;
+import com.escapethemansion.model.game.element.component.PlayerComponent;
+import com.googlecode.lanterna.SGR;
+import com.googlecode.lanterna.TerminalPosition;
+import com.googlecode.lanterna.TerminalSize;
+import com.googlecode.lanterna.TextColor;
+import com.googlecode.lanterna.graphics.TextGraphics;
+import com.googlecode.lanterna.input.KeyStroke;
+import com.googlecode.lanterna.input.KeyType;
+import com.googlecode.lanterna.screen.TerminalScreen;
+import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
+import com.googlecode.lanterna.terminal.Terminal;
+import com.googlecode.lanterna.terminal.swing.AWTTerminalFontConfiguration;
+import com.escapethemansion.model.game.element.Element;
+
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
+
+import static java.lang.Character.toLowerCase;
+
+
+public class LanternaGUI implements GUI{
+    private TerminalScreen screen;
+    private TextGraphics tg;
+    private final int widthWindow;
+    private final int heightWindow;
+    private AWTTerminalFontConfiguration fontConfig;
+    private Map&lt;KeyType, ACTION&gt; keyAction;
+    private Map&lt;Character, ACTION&gt; charAction;
+
+
+<span class="fc" id="L41">    public LanternaGUI(int width, int height) throws FontFormatException, IOException, URISyntaxException {</span>
+<span class="fc" id="L42">        this.widthWindow = width;</span>
+<span class="fc" id="L43">        this.heightWindow = height;</span>
+<span class="fc" id="L44">        this.fontConfig = loadFont();</span>
+<span class="fc" id="L45">        this.drawWindow();</span>
+<span class="fc" id="L46">        keyAction = new TreeMap&lt;KeyType, ACTION&gt;();</span>
+<span class="fc" id="L47">        charAction =  new TreeMap&lt;Character, ACTION&gt;();</span>
+<span class="fc" id="L48">        initializeKeyActions();</span>
+<span class="fc" id="L49">        initializeCharActions();</span>
+<span class="fc" id="L50">    }</span>
+
+    public Map&lt;KeyType, ACTION&gt; getKeyAction() {
+<span class="nc" id="L53">        return this.keyAction;</span>
+    }
+
+    public Map&lt;Character, ACTION&gt; getCharAction() {
+<span class="nc" id="L57">        return this.charAction;</span>
+    }
+
+    /*public void setCharAction() {
+        this.charAction = newCharAction;
+    }
+
+    public void setKeyActions(Map&lt;KeyType, ACTION&gt; newKeyAction) {
+        this.keyAction = newKeyAction;
+    }*/
+
+    private void initializeCharActions() {
+<span class="fc" id="L69">        charAction.put('w', ACTION.JUMPUP);</span>
+<span class="fc" id="L70">        charAction.put('s', ACTION.JUMPDOWN);</span>
+<span class="fc" id="L71">        charAction.put('a', ACTION.JUMPLEFT);</span>
+<span class="fc" id="L72">        charAction.put('d', ACTION.JUMPRIGHT);</span>
+<span class="fc" id="L73">    }</span>
+
+    private void initializeKeyActions() {
+<span class="fc" id="L76">        keyAction.put(KeyType.ArrowUp, ACTION.UP);</span>
+<span class="fc" id="L77">        keyAction.put(KeyType.ArrowDown, ACTION.DOWN);</span>
+<span class="fc" id="L78">        keyAction.put(KeyType.ArrowLeft, ACTION.LEFT);</span>
+<span class="fc" id="L79">        keyAction.put(KeyType.ArrowRight, ACTION.RIGHT);</span>
+<span class="fc" id="L80">        keyAction.put(KeyType.EOF, ACTION.QUIT);</span>
+<span class="fc" id="L81">        keyAction.put(KeyType.Escape, ACTION.PAUSE);</span>
+<span class="fc" id="L82">        keyAction.put(KeyType.Enter, ACTION.SELECT);</span>
+<span class="fc" id="L83">    }</span>
+
+    private AWTTerminalFontConfiguration loadFont() throws URISyntaxException, FontFormatException, IOException {
+<span class="fc" id="L86">        URL resource = getClass().getClassLoader().getResource(&quot;fonts/etm_font.ttf&quot;);</span>
+<span class="fc" id="L87">        File fontFile = new File(resource.toURI());</span>
+<span class="fc" id="L88">        Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);</span>
+
+<span class="fc" id="L90">        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();</span>
+<span class="fc" id="L91">        ge.registerFont(font);</span>
+
+<span class="fc" id="L93">        Font loadedFont = font.deriveFont(Font.PLAIN, 25);</span>
+<span class="fc" id="L94">        AWTTerminalFontConfiguration fc = AWTTerminalFontConfiguration.newInstance(loadedFont);</span>
+<span class="fc" id="L95">        return fc;</span>
+    }
+
+
+    @Override
+    public void drawWindow() throws IOException {
+<span class="fc" id="L101">        TerminalSize terminalSize = new TerminalSize(widthWindow, heightWindow + 1);</span>
+<span class="fc" id="L102">        DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory()</span>
+<span class="fc" id="L103">                .setInitialTerminalSize(terminalSize);</span>
+<span class="fc" id="L104">        terminalFactory.setForceAWTOverSwing(true);</span>
+<span class="fc" id="L105">        terminalFactory.setTerminalEmulatorFontConfiguration(fontConfig);</span>
+<span class="fc" id="L106">        Terminal terminal = terminalFactory.createTerminal();</span>
+
+<span class="fc" id="L108">        this.screen = new TerminalScreen(terminal);</span>
+<span class="fc" id="L109">        this.tg = screen.newTextGraphics();</span>
+
+<span class="fc" id="L111">        this.screen.setCursorPosition(null);   // we don't need a cursor</span>
+<span class="fc" id="L112">        this.screen.startScreen();             // screens must be started</span>
+<span class="fc" id="L113">        this.screen.doResizeIfNecessary();     // resize screen if necessary</span>
+<span class="fc" id="L114">    }</span>
+
+    @Override
+    public &lt;T extends Element&gt; void drawElement(T element) {
+<span class="nc" id="L118">        tg.setForegroundColor(TextColor.Factory.fromString(element.getColor()));</span>
+<span class="nc" id="L119">        tg.enableModifiers(SGR.BOLD);</span>
+<span class="nc" id="L120">        tg.putString(new TerminalPosition(element.getPosition().getX(), element.getPosition().getY()), element.getAppearance());</span>
+<span class="nc" id="L121">    }</span>
+
+    public &lt;T extends PlayerComponent&gt; void drawPlayerComponent(T playerComponent) {
+<span class="nc" id="L124">        tg.setForegroundColor(TextColor.Factory.fromString(playerComponent.getColor()));</span>
+<span class="nc" id="L125">        tg.enableModifiers(SGR.BOLD);</span>
+
+<span class="nc" id="L127">        tg.putString(new TerminalPosition(playerComponent.getPosition().getX(), playerComponent.getPosition().getY()), playerComponent.getText());</span>
+
+<span class="nc bnc" id="L129" title="All 2 branches missed.">        for(int i = 0; i &lt; playerComponent.getValue()/10; i++) {</span>
+<span class="nc" id="L130">            Position position = playerComponent.getPosition().add(playerComponent.getInterval()).addX(i);</span>
+<span class="nc" id="L131">            tg.putString(new TerminalPosition(position.getX(), position.getY()), playerComponent.getAppearance());</span>
+        }
+<span class="nc" id="L133">    }</span>
+
+    @Override
+    public void drawText(Position position, String text, String color) {
+<span class="nc" id="L137">        tg.setForegroundColor(TextColor.Factory.fromString(color));</span>
+<span class="nc" id="L138">        tg.enableModifiers(SGR.BOLD);</span>
+<span class="nc" id="L139">        tg.putString(new TerminalPosition(position.getX(), position.getY()), text);</span>
+<span class="nc" id="L140">    }</span>
+
+    @Override
+    public ACTION getNextAction() throws IOException {
+<span class="nc" id="L144">        KeyStroke keyStroke = screen.pollInput(); //TODO: is this the better way? - se continuarmos a carregar o player continua a ir</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">        if (keyStroke == null) return ACTION.NONE;</span>
+
+        ACTION nextAction;
+<span class="nc bnc" id="L148" title="All 2 branches missed.">        if(keyStroke.getKeyType() != KeyType.Character) {</span>
+<span class="nc" id="L149">            nextAction = keyAction.get(keyStroke.getKeyType());</span>
+        } else {
+<span class="nc" id="L151">            nextAction = charAction.get(toLowerCase(keyStroke.getCharacter()));</span>
+        }
+
+<span class="nc bnc" id="L154" title="All 2 branches missed.">        return nextAction == null ? ACTION.NONE : nextAction;</span>
+    }
+
+    @Override
+    public void refresh() throws IOException {
+<span class="nc" id="L159">        screen.refresh();</span>
+<span class="nc" id="L160">    }</span>
+
+    @Override
+    public void clear() {
+<span class="nc" id="L164">        screen.clear();</span>
+<span class="nc" id="L165">    }</span>
+
+    @Override
+    public void close() throws IOException {
+<span class="nc" id="L169">        screen.close();</span>
+<span class="nc" id="L170">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

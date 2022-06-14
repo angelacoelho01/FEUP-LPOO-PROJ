@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FearTest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">escapethemansion$Tests_in__escapethemansion_test_.exec</a> &gt; <a href="index.source.html" class="el_package">com.escapethemansion.model.game.element.component</a> &gt; <span class="el_source">FearTest.java</span></div><h1>FearTest.java</h1><pre class="source lang-java linenums">package com.escapethemansion.model.game.element.component;
+
+import com.escapethemansion.model.game.Position;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+<span class="fc" id="L9">public class FearTest {</span>
+
+    private Fear fear;
+
+    @BeforeEach
+    void setup() {
+<span class="fc" id="L15">        this.fear = new Fear(50);</span>
+<span class="fc" id="L16">        this.fear.setColor(&quot;#FFFFFF&quot;);</span>
+<span class="fc" id="L17">    }</span>
+
+    @Test
+    public void getValue(){
+<span class="fc" id="L21">        assertEquals(this.fear.getValue(), 50);</span>
+<span class="fc" id="L22">    }</span>
+
+    @Test
+    public void setValue(){
+<span class="fc" id="L26">        this.fear.setValue(63);</span>
+<span class="fc" id="L27">        assertEquals(this.fear.getValue(), 63);</span>
+<span class="fc" id="L28">    }</span>
+
+    @Test
+    public void getColor(){
+<span class="fc" id="L32">        assertEquals(this.fear.getColor(), &quot;#FFFFFF&quot;);</span>
+<span class="fc" id="L33">    }</span>
+
+    @Test
+    public void setColor(){
+<span class="fc" id="L37">        this.fear.setColor(&quot;#FF00FF&quot;);</span>
+<span class="fc" id="L38">        assertEquals(this.fear.getColor(), &quot;#FF00FF&quot;);</span>
+<span class="fc" id="L39">    }</span>
+
+    @Test
+    public void getAppearance(){
+<span class="fc" id="L43">        assertEquals(this.fear.getAppearance(), &quot;S&quot;);</span>
+<span class="fc" id="L44">    }</span>
+
+    @Test
+    public void getInterval(){
+<span class="fc" id="L48">        assertEquals(this.fear.getInterval(), new Position(8));</span>
+<span class="fc" id="L49">    }</span>
+
+    @Test
+    public void getText(){
+<span class="fc" id="L53">        assertEquals(this.fear.getText(), &quot;fear&quot;);</span>
+<span class="fc" id="L54">    }</span>
+
+    @Test
+    public void getPosition(){
+<span class="fc" id="L58">        assertEquals(this.fear.getPosition(), new Position(1, 10));</span>
+<span class="fc" id="L59">    }</span>
+
+    @Test
+    public void setPosition(){
+<span class="fc" id="L63">        this.fear.setPosition(new Position(2, 12));</span>
+<span class="fc" id="L64">        assertEquals(this.fear.getPosition(), new Position(2, 12));</span>
+<span class="fc" id="L65">    }</span>
+
+    @Test
+    public void decreaseValue(){
+<span class="fc" id="L69">        this.fear.decreaseValue();</span>
+<span class="fc" id="L70">        assertEquals(this.fear.getValue(), 40);</span>
+<span class="fc" id="L71">    }</span>
+
+    @Test
+    public void increaseValue(){
+<span class="fc" id="L75">        this.fear.increaseValue();</span>
+<span class="fc" id="L76">        assertEquals(this.fear.getValue(), 55);</span>
+<span class="fc" id="L77">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

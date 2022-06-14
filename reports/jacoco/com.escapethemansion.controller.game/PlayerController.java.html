@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PlayerController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">escapethemansion$Tests_in__escapethemansion_test_.exec</a> &gt; <a href="index.source.html" class="el_package">com.escapethemansion.controller.game</a> &gt; <span class="el_source">PlayerController.java</span></div><h1>PlayerController.java</h1><pre class="source lang-java linenums">package com.escapethemansion.controller.game;
+
+import com.escapethemansion.Game;
+import com.escapethemansion.gui.GUI;
+
+import com.escapethemansion.model.game.Position;
+import com.escapethemansion.model.game.element.*;
+import com.escapethemansion.model.game.floor.Floor;
+
+import java.io.IOException;
+
+public class PlayerController extends ElementController{
+
+    private final BoxController boxController;
+    private int directionSel;
+
+    public PlayerController (Floor floor) {
+<span class="fc" id="L18">        super(floor);</span>
+<span class="fc" id="L19">        this.boxController = new BoxController(floor);</span>
+<span class="fc" id="L20">    }</span>
+
+    public BoxController getBoxController() {
+<span class="fc" id="L23">        return boxController;</span>
+    }
+
+    public void moveElementUp() {
+<span class="fc" id="L27">        this.setDirectionSel(0);</span>
+<span class="fc" id="L28">        moveElement(this.getModel().getPlayer().getPosition().getUp());</span>
+<span class="fc" id="L29">    }</span>
+
+    public void moveElementRight() {
+<span class="fc" id="L32">        this.setDirectionSel(1);</span>
+<span class="fc" id="L33">        moveElement(this.getModel().getPlayer().getPosition().getRight());</span>
+<span class="fc" id="L34">    }</span>
+
+    public void moveElementDown() {
+<span class="fc" id="L37">        this.setDirectionSel(2);</span>
+<span class="fc" id="L38">        moveElement(this.getModel().getPlayer().getPosition().getDown());</span>
+<span class="fc" id="L39">    }</span>
+
+    public void moveElementLeft() {
+<span class="fc" id="L42">        this.setDirectionSel(3);</span>
+<span class="fc" id="L43">        moveElement(this.getModel().getPlayer().getPosition().getLeft());</span>
+<span class="fc" id="L44">    }</span>
+
+    public void jumpElementUp() {
+<span class="nc" id="L47">        this.setDirectionSel(-1);</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">        if(canElementMove(this.getModel().getPlayer().getPosition().getUp())) {</span>
+<span class="nc" id="L49">            moveElement(this.getModel().getPlayer().getPosition().getUp());</span>
+<span class="nc" id="L50">            moveElementUp();</span>
+<span class="nc" id="L51">            this.inHole(this.getModel().getPlayer().getPosition());</span>
+        }
+<span class="nc" id="L53">    }</span>
+
+    public void jumpElementRight() {
+<span class="nc" id="L56">        this.setDirectionSel(-1);</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">        if(canElementMove(this.getModel().getPlayer().getPosition().getRight())) {</span>
+<span class="nc" id="L58">            moveElement(this.getModel().getPlayer().getPosition().getRight());</span>
+<span class="nc" id="L59">            moveElementRight();</span>
+<span class="nc" id="L60">            this.inHole(this.getModel().getPlayer().getPosition());</span>
+        }
+<span class="nc" id="L62">    }</span>
+
+    public void jumpElementDown() {
+<span class="nc" id="L65">        this.setDirectionSel(-1);</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        if(canElementMove(this.getModel().getPlayer().getPosition().getDown())) {</span>
+<span class="nc" id="L67">            moveElement(this.getModel().getPlayer().getPosition().getDown());</span>
+<span class="nc" id="L68">            moveElementDown();</span>
+<span class="nc" id="L69">            this.inHole(this.getModel().getPlayer().getPosition());</span>
+        }
+<span class="nc" id="L71">    }</span>
+
+    public void jumpElementLeft() {
+<span class="nc" id="L74">        this.setDirectionSel(-1);</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">        if (canElementMove(this.getModel().getPlayer().getPosition().getLeft())){</span>
+<span class="nc" id="L76">            moveElement(this.getModel().getPlayer().getPosition().getLeft());</span>
+<span class="nc" id="L77">            moveElementLeft();</span>
+<span class="nc" id="L78">            this.inHole(this.getModel().getPlayer().getPosition());</span>
+        }
+<span class="nc" id="L80">    }</span>
+
+    public boolean canElementMove(Position position) {
+<span class="fc bfc" id="L83" title="All 2 branches covered.">        for (Wall wall : this.getModel().getWalls())</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">            if (wall.getPosition().equals(position)) return false;</span>
+
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        for (Key key : this.getModel().getKeys()) {</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">            if (key.getPosition().equals(position))</span>
+<span class="fc" id="L88">                return this.getModel().collectPlayerKey(key);</span>
+<span class="fc" id="L89">        }</span>
+
+<span class="fc bfc" id="L91" title="All 2 branches covered.">        for (Hole hole : this.getModel().getHoles()) {</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">            if (hole.getPosition().equals(position)) {</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">                if (this.getDirectionSel() != -1)</span>
+<span class="fc" id="L94">                    this.getModel().getPlayer().getLife().setValue(0);</span>
+            }
+<span class="fc" id="L96">        }</span>
+
+<span class="fc bfc" id="L98" title="All 2 branches covered.">        for (Ghost ghost : this.getModel().getGhosts()) {</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">            if (ghost.getPosition().equals(position)) {</span>
+<span class="fc" id="L100">                this.getModel().getPlayer().getFear().increaseValue();</span>
+<span class="fc" id="L101">                ghost.getLife().attack(this.getModel().getPlayer().getStrength());</span>
+
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">                if (ghost.getLife().getValue() &lt;= 0){</span>
+<span class="nc" id="L104">                    this.getModel().getGhosts().remove(ghost);</span>
+<span class="nc" id="L105">                    this.getModel().addPoints(500);</span>
+<span class="nc" id="L106">                    System.out.println(&quot;Ghost killed!&quot;);</span>
+                }
+
+<span class="fc" id="L109">                return false;</span>
+            }
+<span class="fc" id="L111">        }</span>
+
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">        for (Door door : this.getModel().getDoors()) {</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">            if (door.getPosition().equals(position)) {</span>
+<span class="nc" id="L115">                return false;</span>
+            }
+<span class="nc" id="L117">        }</span>
+
+<span class="pc bpc" id="L119" title="1 of 4 branches missed.">        if (this.getModel().getWeapon() != null &amp;&amp; this.getModel().getWeapon().getPosition().equals(position)){</span>
+<span class="fc" id="L120">            getModel().getWeapon().catchWeapon(getModel().getPlayer());</span>
+<span class="fc" id="L121">            getModel().removeWeapon();</span>
+        }
+
+<span class="fc bfc" id="L124" title="All 2 branches covered.">        for (Box box : this.getModel().getBoxes()) {</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">            if (box.getPosition().equals(position)) {</span>
+<span class="fc" id="L126">                this.getBoxController().setBox(box);</span>
+
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">                if (this.getDirectionSel() == -1)</span>
+<span class="nc" id="L129">                    return false;</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">                if (this.getDirectionSel() == 0)</span>
+<span class="nc" id="L131">                    this.getBoxController().moveElementUp();</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">                else if (this.getDirectionSel() == 1)</span>
+<span class="nc" id="L133">                    this.getBoxController().moveElementRight();</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">                else if (this.getDirectionSel() == 2)</span>
+<span class="fc" id="L135">                    this.getBoxController().moveElementDown();</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">                else if (this.getDirectionSel() == 3)</span>
+<span class="nc" id="L137">                    this.getBoxController().moveElementLeft();</span>
+
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">                return !(this.getBoxController().getBox().getPosition().equals(position));</span>
+            }
+<span class="fc" id="L141">        }</span>
+
+<span class="fc bfc" id="L143" title="All 2 branches covered.">        for (Battery battery : this.getModel().getBatteries()) {</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">            if(battery.getPosition().equals(position)) {</span>
+<span class="fc" id="L145">                this.getModel().removeBattery(battery);</span>
+<span class="fc" id="L146">                this.getModel().getPlayer().getBattery().increaseValue();</span>
+<span class="fc" id="L147">                return true;</span>
+            }
+<span class="fc" id="L149">        }</span>
+
+<span class="fc" id="L151">        return true;</span>
+    }
+
+    public void moveElement(Position position) {
+<span class="fc bfc" id="L155" title="All 2 branches covered.">        if(canElementMove(position))</span>
+<span class="fc" id="L156">            this.getModel().getPlayer().setPosition(position);</span>
+<span class="fc" id="L157">    }</span>
+
+    public void inHole(Position position){
+<span class="nc bnc" id="L160" title="All 2 branches missed.">        for (Hole hole : this.getModel().getHoles()) {</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">            if (hole.getPosition().equals(position)) {</span>
+<span class="nc" id="L162">                this.getModel().getPlayer().getLife().setValue(0);</span>
+            }
+<span class="nc" id="L164">        }</span>
+<span class="nc" id="L165">    }</span>
+
+    @Override
+    public void step(Game game, GUI.ACTION action, long time) throws IOException {
+<span class="nc bnc" id="L169" title="All 2 branches missed.">        if (action == GUI.ACTION.UP) moveElementUp();</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">        if (action == GUI.ACTION.RIGHT) moveElementRight();</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">        if (action == GUI.ACTION.DOWN) moveElementDown();</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">        if (action == GUI.ACTION.LEFT) moveElementLeft();</span>
+<span class="nc bnc" id="L173" title="All 2 branches missed.">        if (action == GUI.ACTION.JUMPUP) jumpElementUp();</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">        if (action == GUI.ACTION.JUMPDOWN) jumpElementDown();</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">        if (action == GUI.ACTION.JUMPLEFT) jumpElementLeft();</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">        if (action == GUI.ACTION.JUMPRIGHT) jumpElementRight();</span>
+<span class="nc" id="L177">    }</span>
+
+    public int getDirectionSel() {
+<span class="fc" id="L180">        return directionSel;</span>
+    }
+
+    public void setDirectionSel(int directionSel) {
+<span class="fc" id="L184">        this.directionSel = directionSel;</span>
+<span class="fc" id="L185">    }</span>
+}
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

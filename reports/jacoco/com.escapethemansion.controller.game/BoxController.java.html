@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BoxController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">escapethemansion$Tests_in__escapethemansion_test_.exec</a> &gt; <a href="index.source.html" class="el_package">com.escapethemansion.controller.game</a> &gt; <span class="el_source">BoxController.java</span></div><h1>BoxController.java</h1><pre class="source lang-java linenums">package com.escapethemansion.controller.game;
+
+import com.escapethemansion.Game;
+import com.escapethemansion.gui.GUI;
+import com.escapethemansion.model.game.Position;
+import com.escapethemansion.model.game.floor.Floor;
+import com.escapethemansion.model.game.element.Box;
+
+import java.io.IOException;
+
+public class BoxController extends ElementController{
+
+    private Box box;
+
+    public BoxController(Floor floor) {
+<span class="fc" id="L16">        super(floor);</span>
+<span class="fc" id="L17">    }</span>
+
+    public Box getBox() {
+<span class="fc" id="L20">        return this.box;</span>
+    }
+
+    public void setBox(Box box) {
+<span class="fc" id="L24">        this.box = box;</span>
+<span class="fc" id="L25">    }</span>
+
+    public void moveElementUp() {
+<span class="nc" id="L28">        moveElement(this.getBox().getPosition().getUp());</span>
+<span class="nc" id="L29">    }</span>
+
+    public void moveElementRight() {
+<span class="nc" id="L32">        moveElement(this.getBox().getPosition().getRight());</span>
+<span class="nc" id="L33">    }</span>
+
+    public void moveElementDown() {
+<span class="fc" id="L36">        moveElement(this.getBox().getPosition().getDown());</span>
+<span class="fc" id="L37">    }</span>
+
+    public void moveElementLeft() {
+<span class="nc" id="L40">        moveElement(this.getBox().getPosition().getLeft());</span>
+<span class="nc" id="L41">    }</span>
+
+    public void moveElement(Position position) {
+<span class="pc bpc" id="L44" title="1 of 2 branches missed.">        if(canElementMove(position))</span>
+<span class="fc" id="L45">            this.getBox().setPosition(position);</span>
+<span class="fc" id="L46">    }</span>
+
+    @Override
+    public void step(Game game, GUI.ACTION action, long time) throws IOException {
+<span class="nc" id="L50">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

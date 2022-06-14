@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Options.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">escapethemansion$Tests_in__escapethemansion_test_.exec</a> &gt; <a href="index.source.html" class="el_package">com.escapethemansion.model.menu</a> &gt; <span class="el_source">Options.java</span></div><h1>Options.java</h1><pre class="source lang-java linenums">package com.escapethemansion.model.menu;
+
+import com.escapethemansion.gui.GUI;
+import com.escapethemansion.gui.LanternaGUI;
+import com.escapethemansion.model.game.element.Key;
+import com.googlecode.lanterna.input.KeyStroke;
+import com.googlecode.lanterna.input.KeyType;
+
+import java.util.*;
+
+public class Options {
+    private final List&lt;String&gt; entries;
+<span class="nc" id="L13">    private int currentEntry = 0;</span>
+    private LanternaGUI gui;
+    private boolean selectedJumpWASD;
+    private boolean currentSelectedJump;
+
+<span class="nc" id="L18">    public Options(LanternaGUI gui) {</span>
+<span class="nc" id="L19">        this.entries = Arrays.asList(&quot;jump with arrow keys&quot;, &quot;jump with wasd&quot;, &quot;return to menu&quot;);</span>
+<span class="nc" id="L20">        this.gui = gui;</span>
+<span class="nc" id="L21">        this.selectedJumpWASD = true;</span>
+<span class="nc" id="L22">        this.currentSelectedJump = true; //if true Jump with WASD else Jump with Arrow Keys</span>
+<span class="nc" id="L23">    }</span>
+
+    public boolean getSelectedJumpWASD() {
+<span class="nc" id="L26">        return this.selectedJumpWASD;</span>
+    }
+
+    public void setSelectedJumpWASD(boolean newSelectedJumpWASD) {
+<span class="nc" id="L30">        this.selectedJumpWASD = currentSelectedJump;</span>
+<span class="nc" id="L31">    }</span>
+
+    public void setCurrentSelectedJump(boolean newCurrentSelectedJump) {
+<span class="nc" id="L34">        this.currentSelectedJump = newCurrentSelectedJump;</span>
+<span class="nc" id="L35">    }</span>
+
+    public void updateJumpKeysWASD() {
+<span class="nc" id="L38">        gui.getKeyAction().replace(KeyType.ArrowUp, GUI.ACTION.UP);</span>
+<span class="nc" id="L39">        gui.getKeyAction().replace(KeyType.ArrowDown, GUI.ACTION.DOWN);</span>
+<span class="nc" id="L40">        gui.getKeyAction().replace(KeyType.ArrowLeft, GUI.ACTION.LEFT);</span>
+<span class="nc" id="L41">        gui.getKeyAction().replace(KeyType.ArrowRight, GUI.ACTION.RIGHT);</span>
+
+<span class="nc" id="L43">        gui.getCharAction().replace('w', GUI.ACTION.JUMPUP);</span>
+<span class="nc" id="L44">        gui.getCharAction().replace('s', GUI.ACTION.JUMPDOWN);</span>
+<span class="nc" id="L45">        gui.getCharAction().replace('a', GUI.ACTION.JUMPLEFT);</span>
+<span class="nc" id="L46">        gui.getCharAction().replace('d', GUI.ACTION.JUMPRIGHT);</span>
+<span class="nc" id="L47">    }</span>
+
+    public void updateJumpKeysArrows() {
+<span class="nc" id="L50">        gui.getKeyAction().replace(KeyType.ArrowUp, GUI.ACTION.JUMPUP);</span>
+<span class="nc" id="L51">        gui.getKeyAction().replace(KeyType.ArrowDown, GUI.ACTION.JUMPDOWN);</span>
+<span class="nc" id="L52">        gui.getKeyAction().replace(KeyType.ArrowLeft, GUI.ACTION.JUMPLEFT);</span>
+<span class="nc" id="L53">        gui.getKeyAction().replace(KeyType.ArrowRight, GUI.ACTION.JUMPRIGHT);</span>
+
+<span class="nc" id="L55">        gui.getCharAction().replace('w', GUI.ACTION.UP);</span>
+<span class="nc" id="L56">        gui.getCharAction().replace('s', GUI.ACTION.DOWN);</span>
+<span class="nc" id="L57">        gui.getCharAction().replace('a', GUI.ACTION.LEFT);</span>
+<span class="nc" id="L58">        gui.getCharAction().replace('d', GUI.ACTION.RIGHT);</span>
+
+<span class="nc" id="L60">    }</span>
+
+    public void nextEntry() {
+<span class="nc" id="L63">        currentEntry++;</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">        if (currentEntry &gt; this.entries.size() - 1)</span>
+<span class="nc" id="L65">            currentEntry = 0;</span>
+<span class="nc" id="L66">    }</span>
+
+    public void previousEntry() {
+<span class="nc" id="L69">        currentEntry--;</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">        if (currentEntry &lt; 0)</span>
+<span class="nc" id="L71">            currentEntry = this.entries.size() - 1;</span>
+<span class="nc" id="L72">    }</span>
+
+    public String getEntry(int i) {
+<span class="nc" id="L75">        return entries.get(i);</span>
+    }
+
+    public boolean isSelected(int i) {
+<span class="nc bnc" id="L79" title="All 2 branches missed.">        return currentEntry == i;</span>
+    }
+
+    public boolean isSelectedJumpArrowKeys() {
+<span class="nc" id="L83">        return isSelected(0);</span>
+    }
+
+    public boolean isSelectedJumpWASD() {
+<span class="nc" id="L87">        return isSelected(1);</span>
+    }
+
+    public boolean isSelectedQuit() {
+<span class="nc" id="L91">        return isSelected(2);</span>
+    }
+
+    public int getNumberEntries() {
+<span class="nc" id="L95">        return this.entries.size();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FloorTimer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">escapethemansion$Tests_in__escapethemansion_test_.exec</a> &gt; <a href="index.source.html" class="el_package">com.escapethemansion.model.game.timer</a> &gt; <span class="el_source">FloorTimer.java</span></div><h1>FloorTimer.java</h1><pre class="source lang-java linenums">package com.escapethemansion.model.game.timer;
+
+import com.escapethemansion.model.game.floor.Floor;
+import com.escapethemansion.model.game.timer.Time;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class FloorTimer {
+    private final Time time;
+    private final Timer timer;
+    private boolean isPaused;
+    private Floor floor;
+
+<span class="fc" id="L15">    public FloorTimer(int min, int sec, Floor floor) {</span>
+<span class="fc" id="L16">        this.time = new Time(sec, min);</span>
+<span class="fc" id="L17">        this.timer = new Timer();</span>
+<span class="fc" id="L18">        this.isPaused = true;</span>
+<span class="fc" id="L19">        this.floor = floor;</span>
+<span class="fc" id="L20">    }</span>
+
+    public boolean isPaused() {
+<span class="fc" id="L23">        return isPaused;</span>
+    }
+
+
+    public void startTimer() {
+<span class="fc" id="L28">        timer.scheduleAtFixedRate(new TimerTask() {</span>
+            public void run() {
+<span class="pc bpc" id="L30" title="1 of 2 branches missed.">                if(!isPaused)</span>
+<span class="nc" id="L31">                    setInterval();</span>
+<span class="fc" id="L32">            }</span>
+        }, 1000, 1000);
+<span class="fc" id="L34">    }</span>
+
+    public boolean timeIsUp() {
+<span class="pc bpc" id="L37" title="2 of 4 branches missed.">        return time.getMinute() == 0 &amp;&amp; time.getSecond() == 0;</span>
+    }
+
+    public void pauseTimer() {
+<span class="fc" id="L41">        isPaused = true;</span>
+<span class="fc" id="L42">    }</span>
+
+    public void resumeTimer() {
+<span class="fc" id="L45">        isPaused = false;</span>
+<span class="fc" id="L46">    }</span>
+
+    public void endTimer() {
+<span class="nc" id="L49">        timer.cancel();</span>
+<span class="nc" id="L50">    }</span>
+
+    public String getTime() {
+<span class="fc" id="L53">        return String.format(&quot;%02d:%02d&quot;, time.getMinute(), time.getSecond());</span>
+    }
+
+
+    private void setInterval(){
+<span class="nc bnc" id="L58" title="All 2 branches missed.">        if(!time.reduceTime(this.isPaused, this.floor)) timer.cancel();</span>
+<span class="nc" id="L59">    }</span>
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

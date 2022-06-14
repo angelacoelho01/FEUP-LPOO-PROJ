@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FloorController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">escapethemansion$Tests_in__escapethemansion_test_.exec</a> &gt; <a href="index.source.html" class="el_package">com.escapethemansion.controller.game</a> &gt; <span class="el_source">FloorController.java</span></div><h1>FloorController.java</h1><pre class="source lang-java linenums">package com.escapethemansion.controller.game;
+
+import com.escapethemansion.Game;
+import com.escapethemansion.gui.GUI;
+import com.escapethemansion.model.menu.GameOver;
+import com.escapethemansion.model.menu.LevelComplete;
+import com.escapethemansion.model.menu.Pause;
+import com.escapethemansion.state.GameOverState;
+import com.escapethemansion.state.LevelCompleteState;
+
+import com.escapethemansion.model.game.floor.Floor;
+import com.escapethemansion.state.PauseState;
+
+import java.io.IOException;
+import java.util.Objects;
+
+public class FloorController extends GameController {
+    private final PlayerController playerController;
+    private final GhostController ghostController;
+    private final BoxController boxController;
+
+    public FloorController(Floor floor) {
+<span class="fc" id="L23">        super(floor);</span>
+
+<span class="fc" id="L25">        this.playerController = new PlayerController(floor);</span>
+<span class="fc" id="L26">        this.ghostController = new GhostController(floor);</span>
+<span class="fc" id="L27">        this.boxController = new BoxController(floor);</span>
+<span class="fc" id="L28">    }</span>
+
+    public PlayerController getPlayerController(){
+<span class="fc" id="L31">        return this.playerController;</span>
+    }
+
+    public GhostController getGhostController() {
+<span class="fc" id="L35">        return this.ghostController;</span>
+    }
+
+    private boolean isLevelComplete(){
+<span class="nc bnc" id="L39" title="All 4 branches missed.">        return getModel().getLevelEnd().getPosition().equals(getModel().getPlayer().getPosition()) &amp;&amp; getModel().getKeys().isEmpty();</span>
+    }
+
+    private boolean isPlayerDead() {
+<span class="nc bnc" id="L43" title="All 2 branches missed.">        return getModel().getPlayer().getLife().getValue() == 0;</span>
+    }
+
+    public BoxController getBoxController() {
+<span class="nc" id="L47">        return this.boxController;</span>
+    }
+
+    @Override
+    public boolean equals(Object o) {
+<span class="nc bnc" id="L52" title="All 2 branches missed.">        if (this == o) return true;</span>
+<span class="nc bnc" id="L53" title="All 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+<span class="nc" id="L54">        FloorController that = (FloorController) o;</span>
+<span class="nc bnc" id="L55" title="All 4 branches missed.">        return Objects.equals(playerController, that.playerController) &amp;&amp; Objects.equals(ghostController, that.ghostController);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L60">        return Objects.hash(playerController, ghostController);</span>
+    }
+
+    @Override
+    public void step(Game game, GUI.ACTION action, long time) throws IOException {
+
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        if (action == GUI.ACTION.PAUSE) {</span>
+<span class="nc" id="L67">            getModel().getTimer().pauseTimer();</span>
+<span class="nc" id="L68">            game.setState(new PauseState(new Pause(getModel())));</span>
+        }
+<span class="nc bnc" id="L70" title="All 2 branches missed.">        else if (isLevelComplete()) {</span>
+<span class="nc" id="L71">            getModel().getTimer().endTimer();</span>
+<span class="nc" id="L72">            game.addPoints(getModel().getCurrPoints());</span>
+<span class="nc" id="L73">            game.setState(new LevelCompleteState(new LevelComplete(getModel().getCurrPoints(), game.getTotalPoints())));</span>
+        }
+<span class="nc bnc" id="L75" title="All 4 branches missed.">        else if (getModel().getTimer().timeIsUp() || isPlayerDead()){</span>
+<span class="nc" id="L76">            getModel().getTimer().endTimer();</span>
+<span class="nc" id="L77">            game.setState(new GameOverState(new GameOver()));</span>
+        }
+        else {
+<span class="nc" id="L80">            getModel().getTimer().resumeTimer();</span>
+<span class="nc" id="L81">            playerController.step(game, action, time);</span>
+<span class="nc" id="L82">            ghostController.step(game, action, time);</span>
+        }
+<span class="nc" id="L84">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

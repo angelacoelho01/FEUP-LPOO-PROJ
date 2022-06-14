@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Game.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">escapethemansion$Tests_in__escapethemansion_test_.exec</a> &gt; <a href="index.source.html" class="el_package">com.escapethemansion</a> &gt; <span class="el_source">Game.java</span></div><h1>Game.java</h1><pre class="source lang-java linenums">package com.escapethemansion;
+
+import com.escapethemansion.gui.GUI;
+import com.escapethemansion.gui.LanternaGUI;
+
+import com.escapethemansion.model.game.Mansion;
+import com.escapethemansion.state.MenuState;
+import com.escapethemansion.state.State;
+import com.escapethemansion.model.menu.Menu;
+
+import java.awt.*;
+import java.io.IOException;
+import java.net.URISyntaxException;
+
+import static java.lang.System.exit;
+
+
+public class Game {
+    private State state;
+    private LanternaGUI gui;
+    private Mansion mansion;
+    private int floorInd;
+    private int totalPoints;
+
+<span class="nc" id="L25">    public Game() throws FontFormatException, IOException, URISyntaxException {</span>
+<span class="nc" id="L26">        this.gui = new LanternaGUI(45, 30);</span>
+
+<span class="nc" id="L28">        this.state = new MenuState(new Menu());</span>
+<span class="nc" id="L29">        this.mansion = new Mansion();</span>
+<span class="nc" id="L30">        this.floorInd = 0;</span>
+<span class="nc" id="L31">        this.totalPoints = 0;</span>
+<span class="nc" id="L32">    }</span>
+
+    public LanternaGUI getGUI() {
+<span class="nc" id="L35">        return this.gui;</span>
+    }
+
+    public void setState(State state) {
+<span class="nc" id="L39">        this.state = state;</span>
+<span class="nc" id="L40">    }</span>
+
+    public Mansion getMansion() {
+<span class="nc" id="L43">        return this.mansion;</span>
+    }
+
+    public void setMansion(Mansion mansion) {
+<span class="nc" id="L47">        this.mansion = mansion;</span>
+<span class="nc" id="L48">    }</span>
+
+    public int getFloorInd() {
+<span class="nc" id="L51">        return this.floorInd;</span>
+    }
+
+    public void setFloorInd(int floorInd) {
+<span class="nc" id="L55">        this.floorInd = floorInd;</span>
+<span class="nc" id="L56">    }</span>
+
+<span class="nc" id="L58">    public void addPoints(int pointsToAdd) {this.totalPoints += pointsToAdd;}</span>
+
+<span class="nc" id="L60">    public int getTotalPoints() {return this.totalPoints;}</span>
+
+<span class="nc" id="L62">    public void resetTotalPoints() { this.totalPoints = 0;}</span>
+
+    private void start() throws IOException {
+<span class="nc" id="L65">        int FPS = 20;</span>
+<span class="nc" id="L66">        int frameTime = 1000 / FPS;</span>
+
+<span class="nc bnc" id="L68" title="All 2 branches missed.">        while (this.state != null) {</span>
+<span class="nc" id="L69">            long startTime = System.currentTimeMillis();</span>
+
+<span class="nc" id="L71">            state.step(this, gui, startTime);</span>
+
+<span class="nc" id="L73">            long elapsedTime = System.currentTimeMillis() - startTime;</span>
+<span class="nc" id="L74">            long sleepTime = frameTime - elapsedTime;</span>
+            try {
+<span class="nc bnc" id="L76" title="All 2 branches missed.">                if (sleepTime &gt; 0) Thread.sleep(sleepTime);</span>
+<span class="nc" id="L77">            } catch (InterruptedException e) { }</span>
+
+<span class="nc" id="L79">        }</span>
+
+<span class="nc" id="L81">        gui.close();</span>
+<span class="nc" id="L82">    }</span>
+
+
+    public static void main(String[] args) throws IOException, URISyntaxException, FontFormatException {
+<span class="nc" id="L86">        System.out.println(&quot;Starting the Game!&quot;);</span>
+
+<span class="nc" id="L88">        new Game().start();</span>
+<span class="nc" id="L89">        exit(0);</span>
+
+//for mouse clicks
+//        ((AWTTerminalFrame)terminal).getComponent(0).addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                System.out.println(&quot;MC: &quot; + e.getX() + &quot;, &quot; + e.getY());
+//            }
+//        });
+
+<span class="nc" id="L99">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

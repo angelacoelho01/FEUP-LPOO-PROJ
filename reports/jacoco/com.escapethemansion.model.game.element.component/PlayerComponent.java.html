@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PlayerComponent.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">escapethemansion$Tests_in__escapethemansion_test_.exec</a> &gt; <a href="index.source.html" class="el_package">com.escapethemansion.model.game.element.component</a> &gt; <span class="el_source">PlayerComponent.java</span></div><h1>PlayerComponent.java</h1><pre class="source lang-java linenums">package com.escapethemansion.model.game.element.component;
+
+import com.escapethemansion.model.game.Position;
+
+import java.util.Objects;
+
+import static java.lang.String.valueOf;
+
+public class PlayerComponent {
+    protected int value;
+    protected String color;
+    protected String text;
+    protected Position position;
+    private final Position interval;
+    private final String appearence;
+
+<span class="fc" id="L17">    public PlayerComponent(int value) {</span>
+<span class="fc" id="L18">        this.value = value;</span>
+<span class="fc" id="L19">        this.appearence = &quot;S&quot;;</span>
+<span class="fc" id="L20">        this.interval = new Position(8);</span>
+<span class="fc" id="L21">    }</span>
+
+    public int getValue() {
+<span class="fc" id="L24">        return value;</span>
+    }
+
+    public String getColor() {
+<span class="fc" id="L28">        return color;</span>
+    }
+
+    public String getAppearance() {
+<span class="fc" id="L32">        return appearence;</span>
+    }
+
+    public Position getInterval() {
+<span class="fc" id="L36">        return interval;</span>
+    }
+
+    public String getText() {
+<span class="fc" id="L40">        return text;</span>
+    }
+
+    public Position getPosition() {
+<span class="fc" id="L44">        return position;</span>
+    }
+
+    public void setPosition(Position position) {
+<span class="fc" id="L48">        this.position = position;</span>
+<span class="fc" id="L49">    }</span>
+
+    public void setColor(String color) {
+<span class="fc" id="L52">        this.color = color;</span>
+<span class="fc" id="L53">    }</span>
+
+    public void decreaseValue() {
+<span class="fc" id="L56">        this.value--;</span>
+<span class="fc" id="L57">    }</span>
+
+    public void increaseValue() {
+<span class="fc" id="L60">        this.value++;</span>
+<span class="fc" id="L61">    }</span>
+
+    public void setValue(int value) {
+<span class="fc" id="L64">        this.value = value;</span>
+<span class="fc" id="L65">    }</span>
+
+    public String getValueStr() {
+<span class="nc" id="L68">        return valueOf(this.value);</span>
+    }
+
+    @Override
+    public boolean equals(Object o) {
+<span class="nc bnc" id="L73" title="All 2 branches missed.">        if (this == o) return true;</span>
+<span class="nc bnc" id="L74" title="All 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+<span class="nc" id="L75">        PlayerComponent that = (PlayerComponent) o;</span>
+<span class="nc bnc" id="L76" title="All 12 branches missed.">        return value == that.value &amp;&amp; Objects.equals(color, that.color) &amp;&amp; Objects.equals(text, that.text) &amp;&amp; Objects.equals(position, that.position) &amp;&amp; Objects.equals(interval, that.interval) &amp;&amp; Objects.equals(appearence, that.appearence);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L81">        return Objects.hash(value, color, text, position, interval, appearence);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

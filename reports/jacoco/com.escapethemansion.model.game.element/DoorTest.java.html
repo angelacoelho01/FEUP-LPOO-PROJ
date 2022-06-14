@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DoorTest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">escapethemansion$Tests_in__escapethemansion_test_.exec</a> &gt; <a href="index.source.html" class="el_package">com.escapethemansion.model.game.element</a> &gt; <span class="el_source">DoorTest.java</span></div><h1>DoorTest.java</h1><pre class="source lang-java linenums">package com.escapethemansion.model.game.element;
+
+import com.escapethemansion.model.game.Position;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+<span class="fc" id="L9">public class DoorTest {</span>
+
+    private Door d;
+
+    @BeforeEach
+    public void setup(){
+<span class="fc" id="L15">        d = new Door(new Position(3, 4), true);</span>
+<span class="fc" id="L16">        d.setColor(&quot;#FFFF00&quot;);</span>
+<span class="fc" id="L17">    }</span>
+
+    @Test
+    void getPosition() {
+<span class="fc" id="L21">        assertEquals(new Position(3, 4), d.getPosition());</span>
+<span class="fc" id="L22">    }</span>
+
+    @Test
+    void getAppearance() {
+<span class="fc" id="L26">        assertEquals(&quot;|&quot;, d.getAppearance());</span>
+<span class="fc" id="L27">    }</span>
+
+    @Test
+    void getColor() {
+<span class="fc" id="L31">        assertEquals(&quot;#FFFF00&quot;, d.getColor());</span>
+<span class="fc" id="L32">    }</span>
+
+    @Test
+    void setPosition() {
+<span class="fc" id="L36">        d.setPosition(new Position(0, 2));</span>
+<span class="fc" id="L37">        assertEquals(new Position(0, 2), d.getPosition());</span>
+<span class="fc" id="L38">    }</span>
+
+    @Test
+    void setAppearance() {
+<span class="fc" id="L42">        d.setAppearance(&quot;d&quot;);</span>
+<span class="fc" id="L43">        assertEquals(&quot;d&quot;, d.getAppearance());</span>
+<span class="fc" id="L44">    }</span>
+
+    @Test
+    void setColor() {
+<span class="fc" id="L48">        d.setColor(&quot;#FEDCBA&quot;);</span>
+<span class="fc" id="L49">        assertEquals(&quot;#FEDCBA&quot;, d.getColor());</span>
+<span class="fc" id="L50">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

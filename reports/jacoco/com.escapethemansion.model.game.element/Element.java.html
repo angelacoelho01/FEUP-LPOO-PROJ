@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Element.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">escapethemansion$Tests_in__escapethemansion_test_.exec</a> &gt; <a href="index.source.html" class="el_package">com.escapethemansion.model.game.element</a> &gt; <span class="el_source">Element.java</span></div><h1>Element.java</h1><pre class="source lang-java linenums">package com.escapethemansion.model.game.element;
+
+import com.escapethemansion.model.game.Position;
+
+import java.util.Objects;
+
+public class Element {
+    private Position position;
+    protected String appearance;
+    protected String color;
+
+<span class="fc" id="L12">    public Element(Position position) {</span>
+<span class="fc" id="L13">        this.position = position;</span>
+<span class="fc" id="L14">    }</span>
+
+    public Position getPosition() {
+<span class="fc" id="L17">        return this.position;</span>
+    }
+
+    public String getAppearance() {
+<span class="fc" id="L21">        return this.appearance;</span>
+    }
+
+    public String getColor() {
+<span class="fc" id="L25">        return color;</span>
+    }
+
+    public void setPosition(Position position) {
+<span class="fc" id="L29">        this.position = position;</span>
+<span class="fc" id="L30">    }</span>
+
+    public void setAppearance(String appearance) {
+<span class="fc" id="L33">        this.appearance = appearance;</span>
+<span class="fc" id="L34">    }</span>
+
+    public void setColor(String color) {
+<span class="fc" id="L37">        this.color = color;</span>
+<span class="fc" id="L38">    }</span>
+
+    @Override
+    public boolean equals(Object o) {
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        if (this == o) return true;</span>
+<span class="pc bpc" id="L43" title="2 of 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+<span class="fc" id="L44">        Element element = (Element) o;</span>
+<span class="pc bpc" id="L45" title="2 of 4 branches missed.">        return Objects.equals(position, element.position) &amp;&amp; Objects.equals(appearance, element.appearance);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L50">        return Objects.hash(position, appearance);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

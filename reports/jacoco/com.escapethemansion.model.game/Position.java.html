@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Position.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">escapethemansion$Tests_in__escapethemansion_test_.exec</a> &gt; <a href="index.source.html" class="el_package">com.escapethemansion.model.game</a> &gt; <span class="el_source">Position.java</span></div><h1>Position.java</h1><pre class="source lang-java linenums">package com.escapethemansion.model.game;
+
+import java.util.Objects;
+
+public class Position {
+    private final int x;
+    private final int y;
+
+    public Position(int x) {
+<span class="fc" id="L10">        this(x, 0);</span>
+<span class="fc" id="L11">    }</span>
+
+<span class="fc" id="L13">    public Position(int x, int y) {</span>
+<span class="fc" id="L14">        this.x = x;</span>
+<span class="fc" id="L15">        this.y = y;</span>
+<span class="fc" id="L16">    }</span>
+
+    public Position getLeft() {
+<span class="fc" id="L19">        return new Position(x -1, y);</span>
+    }
+
+    public Position getRight() {
+<span class="fc" id="L23">        return new Position(x + 1, y);</span>
+    }
+
+    public Position getUp() {
+<span class="fc" id="L27">        return new Position(x, y - 1);</span>
+    }
+
+    public Position getDown() {
+<span class="fc" id="L31">        return new Position(x, y + 1);</span>
+    }
+
+    public int getX() {
+<span class="fc" id="L35">        return x;</span>
+    }
+
+    public int getY() {
+<span class="fc" id="L39">        return y;</span>
+    }
+
+    public Position addX(int x) {
+<span class="nc" id="L43">        return new Position(getX() + x, getY());</span>
+    }
+
+    public Position addY(int y) {
+<span class="nc" id="L47">        return new Position(getX(), getY() + y);</span>
+    }
+
+    public Position add(Position position) {
+<span class="fc" id="L51">        return new Position(getX() + position.getX(), getY() + position.getY());</span>
+    }
+
+    @Override
+    public boolean equals(Object o) {
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">        if (this == o) return true;</span>
+<span class="pc bpc" id="L57" title="2 of 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+<span class="fc" id="L58">        Position position = (Position) o;</span>
+<span class="fc bfc" id="L59" title="All 4 branches covered.">        return x == position.x &amp;&amp; y == position.y;</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L64">        return Objects.hash(x, y);</span>
+    }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Floor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">escapethemansion$Tests_in__escapethemansion_test_.exec</a> &gt; <a href="index.source.html" class="el_package">com.escapethemansion.model.game.floor</a> &gt; <span class="el_source">Floor.java</span></div><h1>Floor.java</h1><pre class="source lang-java linenums">package com.escapethemansion.model.game.floor;
+
+import com.escapethemansion.model.game.Position;
+import com.escapethemansion.model.game.element.*;
+import com.escapethemansion.model.game.timer.FloorTimer;
+
+import java.util.List;
+import java.util.Objects;
+
+import static java.lang.Math.abs;
+
+public class Floor {
+    private Player player;
+    private List&lt;Wall&gt; walls;
+    private List&lt;Ghost&gt; ghosts;
+    private List&lt;Door&gt; doors;
+    private List&lt;Key&gt; keys;
+    private List&lt;Box&gt; boxes;
+    private List&lt;Hole&gt; holes;
+    private List&lt;Battery&gt; batteries;
+    private String title;
+    private final FloorTimer timer;
+    private EndLevel levelEnd;
+    private Weapon weapon;
+    private int currPoints;
+
+    private Position offset;
+    private final int width;
+    private final int height;
+    private final int numGhosts;
+
+<span class="fc" id="L32">    public Floor(int width, int height, int numGhosts) {</span>
+<span class="fc" id="L33">        this.width = width;</span>
+<span class="fc" id="L34">        this.height = height;</span>
+<span class="fc" id="L35">        this.offset = new Position(0,0);</span>
+<span class="fc" id="L36">        this.timer = new FloorTimer(5, 0, this);</span>
+<span class="fc" id="L37">        this.numGhosts = numGhosts;</span>
+<span class="fc" id="L38">        this.currPoints = 0;</span>
+<span class="fc" id="L39">        timer.startTimer();</span>
+<span class="fc" id="L40">    }</span>
+
+    public Position getOffset() {
+<span class="nc" id="L43">        return offset;</span>
+    }
+
+    public void setOffset(Position offset) {
+<span class="fc" id="L47">        this.offset = offset;</span>
+<span class="fc" id="L48">    }</span>
+
+    public FloorTimer getTimer() {
+<span class="nc" id="L51">        return timer;</span>
+    }
+
+    public Player getPlayer() {
+<span class="fc" id="L55">        return player;</span>
+    }
+
+    public void setPlayer(Player player) {
+<span class="fc" id="L59">        this.player = player;</span>
+<span class="fc" id="L60">    }</span>
+
+    public List&lt;Wall&gt; getWalls() {
+<span class="fc" id="L63">        return walls;</span>
+    }
+
+    public void setWalls(List&lt;Wall&gt; walls) {
+<span class="fc" id="L67">        this.walls = walls;</span>
+<span class="fc" id="L68">    }</span>
+
+    public List&lt;Ghost&gt; getGhosts() {
+<span class="fc" id="L71">        return ghosts;</span>
+    }
+
+    public void setGhosts(List&lt;Ghost&gt; ghosts) {
+<span class="fc" id="L75">        this.ghosts = ghosts;</span>
+<span class="fc" id="L76">    }</span>
+
+    public List&lt;Key&gt; getKeys() {
+<span class="fc" id="L79">        return keys;</span>
+    }
+
+    public void setKeys(List&lt;Key&gt; keys) {
+<span class="fc" id="L83">        this.keys = keys;</span>
+<span class="fc" id="L84">    }</span>
+
+    public List&lt;Door&gt; getDoors() {
+<span class="fc" id="L87">        return doors;</span>
+    }
+
+    public void setDoors(List&lt;Door&gt; doors) {
+<span class="fc" id="L91">        this.doors = doors;</span>
+<span class="fc" id="L92">    }</span>
+
+    public EndLevel getLevelEnd() {
+<span class="fc" id="L95">        return levelEnd;</span>
+    }
+
+    public void setLevelEnd(EndLevel levelEnd) {
+<span class="fc" id="L99">        this.levelEnd = levelEnd;</span>
+<span class="fc" id="L100">    }</span>
+    
+    public List&lt;Box&gt; getBoxes() {
+<span class="fc" id="L103">        return boxes;</span>
+    }
+
+    public void setBoxes(List&lt;Box&gt; boxes) {
+<span class="fc" id="L107">        this.boxes = boxes;</span>
+<span class="fc" id="L108">    }</span>
+
+    public List&lt;Hole&gt; getHoles() {
+<span class="fc" id="L111">        return this.holes;</span>
+    }
+
+    public void setHoles(List&lt;Hole&gt; holes) {
+<span class="fc" id="L115">        this.holes = holes;</span>
+<span class="fc" id="L116">    }</span>
+
+    public Weapon getWeapon() {
+<span class="fc" id="L119">        return weapon;</span>
+    }
+
+    public void setWeapon(Weapon weapon) {
+<span class="fc" id="L123">        this.weapon = weapon;</span>
+<span class="fc" id="L124">    }</span>
+
+    public String getTitle() {
+<span class="nc" id="L127">        return title;</span>
+    }
+
+    public void setTitle(String title) {
+<span class="fc" id="L131">        this.title = title;</span>
+<span class="fc" id="L132">    }</span>
+
+    public int getTotalNumKeys() {
+<span class="nc" id="L135">        return player.getNumKeys() + keys.size();</span>
+    }
+
+    public List&lt;Battery&gt; getBatteries() {
+<span class="fc" id="L139">        return batteries;</span>
+    }
+
+    public void setBatteries(List&lt;Battery&gt; batteries) {
+<span class="fc" id="L143">        this.batteries = batteries;</span>
+<span class="fc" id="L144">    }</span>
+
+    public void removeBattery(Battery battery) {
+<span class="fc" id="L147">        this.batteries.remove(battery);</span>
+<span class="fc" id="L148">    }</span>
+<span class="nc" id="L149">    public int getTotalNumGhosts() { return this.numGhosts;}</span>
+
+    public int getHeight() {
+<span class="nc" id="L152">        return height;</span>
+    }
+
+    public int getWidth() {
+<span class="nc" id="L156">        return width;</span>
+    }
+
+    public void removeWeapon() {
+<span class="fc" id="L160">        this.weapon = null;</span>
+<span class="fc" id="L161">    }</span>
+
+    public boolean collectPlayerKey(Key keyToCollect) {
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">        for(int i = 0; i &lt; keys.size(); i++) {</span>
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">            if(keys.get(i).equals(keyToCollect)) {</span>
+<span class="fc" id="L166">                keys.remove(i);</span>
+<span class="fc" id="L167">                player.addKey();</span>
+<span class="fc" id="L168">                addPoints(100);</span>
+<span class="fc" id="L169">                System.out.println(&quot;Key collected!&quot;);</span>
+
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">                if(!doors.isEmpty())</span>
+<span class="nc" id="L172">                    doors.remove(doors.size()-1);</span>
+                else
+<span class="fc" id="L174">                    System.out.println(&quot;End of Level Doors!&quot;);</span>
+
+<span class="fc" id="L176">                return true;</span>
+            }
+        }
+<span class="nc" id="L179">        return  false;</span>
+    }
+
+<span class="fc" id="L182">    public void addPoints(int pointsToAdd) {this.currPoints += pointsToAdd;}</span>
+<span class="nc" id="L183">    public int getCurrPoints(){return this.currPoints;}</span>
+
+    @Override
+    public boolean equals(Object o) {
+<span class="pc bpc" id="L187" title="1 of 2 branches missed.">        if (this == o) return true;</span>
+<span class="pc bpc" id="L188" title="2 of 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+<span class="fc" id="L189">        Floor floor = (Floor) o;</span>
+<span class="pc bpc" id="L190" title="8 of 16 branches missed.">        return width == floor.width &amp;&amp; height == floor.height &amp;&amp; Objects.equals(player, floor.player) &amp;&amp; Objects.equals(walls, floor.walls) &amp;&amp; Objects.equals(ghosts, floor.ghosts) &amp;&amp; Objects.equals(keys, floor.keys) &amp;&amp; Objects.equals(doors, floor.doors) &amp;&amp; Objects.equals(title, floor.title);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L195">        return Objects.hash(player, walls, ghosts, keys, doors, title, width, height);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

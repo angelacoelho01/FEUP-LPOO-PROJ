@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FloorBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">escapethemansion$Tests_in__escapethemansion_test_.exec</a> &gt; <a href="index.source.html" class="el_package">com.escapethemansion.model.game.floor</a> &gt; <span class="el_source">FloorBuilder.java</span></div><h1>FloorBuilder.java</h1><pre class="source lang-java linenums">package com.escapethemansion.model.game.floor;
+
+import com.escapethemansion.model.game.Position;
+import com.escapethemansion.model.game.element.*;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class FloorBuilder {
+    private int width;
+    private int height;
+    private final List&lt;Wall&gt; walls;
+    private final List&lt;Ghost&gt; ghosts;
+    private final List&lt;Key&gt; keys;
+    private final List&lt;Door&gt; doors;
+    private final List&lt;Hole&gt; holes;
+    private final List&lt;Battery&gt; batteries;
+    private EndLevel levelEnd;
+    private final List&lt;Box&gt; boxes;
+    private Player player;
+    private Weapon weapon;
+    private Position offset;
+    private String title;
+
+<span class="fc" id="L29">    public FloorBuilder(String path) throws IOException {</span>
+<span class="fc" id="L30">        this.walls = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L31">        this.ghosts = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L32">        this.keys = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L33">        this.doors = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L34">        this.levelEnd = null;</span>
+<span class="fc" id="L35">        this.boxes = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L36">        this.holes = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L37">        this.batteries = new ArrayList&lt;Battery&gt;();</span>
+<span class="fc" id="L38">        File map = new File(path);</span>
+<span class="fc" id="L39">        BufferedReader mapReader = new BufferedReader(new FileReader(map));</span>
+<span class="fc" id="L40">        this.loadMap(mapReader);</span>
+<span class="fc" id="L41">    }</span>
+
+    public int getWidth() {
+<span class="fc" id="L44">        return width;</span>
+    }
+
+    public int getHeight() {
+<span class="fc" id="L48">        return height;</span>
+    }
+
+    public Player getPlayer() {
+<span class="fc" id="L52">        return player;</span>
+    }
+
+    public List&lt;Wall&gt; getWalls() {
+<span class="fc" id="L56">        return walls;</span>
+    }
+
+    public List&lt;Ghost&gt; getGhosts() {
+<span class="fc" id="L60">        return ghosts;</span>
+    }
+
+    public List&lt;Box&gt; getBoxes() {
+<span class="fc" id="L64">        return boxes;</span>
+    }
+
+    public List&lt;Hole&gt; getHoles() {
+<span class="fc" id="L68">        return holes;</span>
+    }
+
+    public Position getOffset() {
+<span class="fc" id="L72">        return offset;</span>
+    }
+
+    public String getTitle() {
+<span class="fc" id="L76">        return title;</span>
+    }
+
+    public List&lt;Key&gt; getKeys() {
+<span class="fc" id="L80">        return keys;</span>
+    }
+
+    public List&lt;Door&gt; getDoors() {
+<span class="fc" id="L84">        return doors;</span>
+    }
+
+    public Weapon getWeapon() {
+<span class="fc" id="L88">        return weapon;</span>
+    }
+
+<span class="fc" id="L91">    public EndLevel getLevelEnd() { return  levelEnd;}</span>
+
+    public List&lt;Battery&gt; getBatteries() {
+<span class="fc" id="L94">        return batteries;</span>
+    }
+
+    public Floor createFloor() {
+<span class="fc" id="L98">        Floor arena = new Floor(getWidth(), getHeight(), getGhosts().size());</span>
+
+<span class="fc" id="L100">        arena.setPlayer(getPlayer());</span>
+<span class="fc" id="L101">        arena.setWeapon(getWeapon());</span>
+<span class="fc" id="L102">        arena.setWalls(getWalls());</span>
+<span class="fc" id="L103">        arena.setGhosts(getGhosts());</span>
+<span class="fc" id="L104">        arena.setKeys(getKeys());</span>
+<span class="fc" id="L105">        arena.setDoors(getDoors());</span>
+<span class="fc" id="L106">        arena.setLevelEnd(getLevelEnd());</span>
+<span class="fc" id="L107">        arena.setBoxes(getBoxes());</span>
+<span class="fc" id="L108">        arena.setHoles(getHoles());</span>
+<span class="fc" id="L109">        arena.setBatteries(getBatteries());</span>
+<span class="fc" id="L110">        arena.setTitle(getTitle());</span>
+<span class="fc" id="L111">        arena.setOffset(offset);</span>
+
+<span class="fc" id="L113">        return arena;</span>
+    }
+
+    protected String loadTitle(BufferedReader mapReader) throws IOException {
+<span class="fc" id="L117">        return mapReader.readLine();</span>
+    }
+
+    protected Position loadOffset(BufferedReader mapReader) throws IOException {
+        String line;
+<span class="fc" id="L122">        int x = 0;</span>
+<span class="fc" id="L123">        int y = 0;</span>
+
+<span class="pc bpc" id="L125" title="1 of 4 branches missed.">        for(int i = 0; i &lt; 2 &amp;&amp; (line = mapReader.readLine()) != null; i++) {</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">            if(i == 0) x = Integer.parseInt(line);</span>
+<span class="fc" id="L127">            else y = Integer.parseInt(line);</span>
+        }
+<span class="fc" id="L129">        return new Position(x, y);</span>
+    }
+
+    public void loadMap(BufferedReader mapReader) throws IOException {
+<span class="fc" id="L133">        this.title = loadTitle(mapReader);</span>
+<span class="fc" id="L134">        this.offset = loadOffset(mapReader);</span>
+
+        String line;
+<span class="fc" id="L137">        int numLine = 0;</span>
+<span class="fc" id="L138">        int numCol = 0;</span>
+
+<span class="fc bfc" id="L140" title="All 2 branches covered.">        for(; (line = mapReader.readLine()) != null; numLine++) {</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">            for(numCol = 0; numCol &lt; line.length(); numCol++) {</span>
+<span class="fc" id="L142">                String c = String.valueOf(line.charAt(numCol));</span>
+<span class="fc" id="L143">                Position position = this.offset.add(new Position(numCol, numLine));</span>
+
+<span class="fc bfc" id="L145" title="All 12 branches covered.">                switch (c) {</span>
+                    case &quot;#&quot;:
+<span class="fc" id="L147">                        this.walls.add(new Wall(position));</span>
+<span class="fc" id="L148">                        break;</span>
+
+                    case &quot;G&quot;:
+<span class="fc" id="L151">                        this.ghosts.add(new Ghost(position));</span>
+<span class="fc" id="L152">                        break;</span>
+
+                    case &quot;X&quot;:
+<span class="fc" id="L155">                        this.player = new Player(position);</span>
+<span class="fc" id="L156">                        break;</span>
+
+                    case &quot;K&quot;:
+<span class="fc" id="L159">                        this.keys.add(new Key(position));</span>
+<span class="fc" id="L160">                        break;</span>
+
+                    case &quot;-&quot;:
+<span class="fc" id="L163">                        this.doors.add(new Door(position, false));</span>
+<span class="fc" id="L164">                        break;</span>
+
+                    case &quot;|&quot;:
+<span class="fc" id="L167">                        this.doors.add(new Door(position, true));</span>
+<span class="fc" id="L168">                        break;</span>
+
+                    case &quot;P&quot;:
+<span class="fc" id="L171">                        this.levelEnd = new EndLevel(position);</span>
+<span class="fc" id="L172">                        break;</span>
+
+                    case &quot;B&quot;:
+<span class="fc" id="L175">                        this.boxes.add(new Box(position));</span>
+<span class="fc" id="L176">                        break;</span>
+
+                    case &quot;H&quot;:
+<span class="fc" id="L179">                        this.holes.add(new Hole(position));</span>
+<span class="fc" id="L180">                        break;</span>
+
+                    case &quot;F&quot;:
+<span class="fc" id="L183">                        this.batteries.add(new Battery(position));</span>
+<span class="fc" id="L184">                        break;</span>
+                        
+                    case &quot;W&quot;:
+<span class="fc" id="L187">                        this.weapon = (new Weapon(position));</span>
+<span class="fc" id="L188">                        break;</span>
+
+                    default:
+                        break;
+                }
+            }
+        }
+
+<span class="fc" id="L196">        this.width = numCol;</span>
+<span class="fc" id="L197">        this.height = numLine;</span>
+<span class="fc" id="L198">    }</span>
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
